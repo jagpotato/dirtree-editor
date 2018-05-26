@@ -8,15 +8,9 @@
 <script>
 import Editor from '@/components/Editor'
 import Output from '@/components/Output'
-import {mapState} from 'vuex'
 
 export default {
   name: 'Main',
-  computed: {
-    ...mapState('editor', [
-      'potato'
-    ])
-  },
   components: {
     Editor,
     Output
