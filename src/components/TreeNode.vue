@@ -1,25 +1,38 @@
 <template>
-  <li id="tree-node" @click.stop="click">
+  <li id="tree-node">
     {{node.name}}
+    <button @click.stop="addChild">add</button>
+    <button @click.stop="deleteNode">delete</button>
     <ul>
-      <TreeNode v-for="(child, index) in node.children" :key="index" :node="child"></TreeNode>
+      <TreeNode v-for="(child, index) in children(node)" :key="index" :node="child"></TreeNode>
     </ul>
   </li>
 </template>
 
 <script>
-// import {mapActions} from 'vuex'
+import {mapGetters} from 'vuex'
+
 export default {
   name: 'TreeNode',
   props: {
     node: Object
   },
   methods: {
-    click () {
-      this.$store.dispatch('editor/print', {
+    addChild () {
+      this.$store.dispatch('editor/addChild', {
+        node: this.node
+      })
+    },
+    deleteNode () {
+      this.$store.dispatch('editor/deleteNode', {
         node: this.node
       })
     }
+  },
+  computed: {
+    ...mapGetters('editor', [
+      'children'
+    ])
   }
 }
 </script>
