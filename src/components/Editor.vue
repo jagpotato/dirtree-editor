@@ -1,20 +1,28 @@
 <template>
   <div id="editor">
-    <ul v-for="(directory, index) in directories" :key="index">
-      <TreeNode :node="directory"></TreeNode>
+    <!-- <ul>
+      <li v-for="(directory, index) in root" :key="index" :style="{marginLeft: indent(directory.depth)}">
+        {{directory.name}}
+      </li>
+    </ul> -->
+    <ul>
+      <TreeNode :node="directories[0]"></TreeNode>
     </ul>
   </div>
 </template>
 
 <script>
 import TreeNode from '@/components/TreeNode'
-import {mapState} from 'vuex'
+import {mapState, mapGetters} from 'vuex'
 
 export default {
   name: 'Editor',
   computed: {
     ...mapState('editor', [
       'directories'
+    ]),
+    ...mapGetters('editor', [
+      'root'
     ])
   },
   components: {

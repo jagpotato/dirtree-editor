@@ -1,11 +1,19 @@
 <template>
   <div id="output">
+    {{directories}}
   </div>
 </template>
 
 <script>
+import {mapState} from 'vuex'
+
 export default {
-  name: 'Output'
+  name: 'Output',
+  computed: {
+    ...mapState('editor', [
+      'directories'
+    ])
+  }
 }
 </script>
 
@@ -14,6 +22,6 @@ export default {
 #output {
   width: 50%;
   height: 100%;
-  background-color: #0000aa;
+  background-color: #aaaaaa;
 }
 </style>
