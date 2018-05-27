@@ -1,11 +1,18 @@
 <template>
   <li id="tree-node">
-    {{node.name}}
-    <button @click.stop="addChild">add</button>
-    <button @click.stop="deleteNode">delete</button>
-    <ul>
-      <TreeNode v-for="(child, index) in children(node)" :key="index" :node="child"></TreeNode>
+    <button v-if="node.isOpened" @click="toggleOpen">▽</button>
+    <button v-else @click="toggleOpen">▷</button>
+    {{node.id}}
+    <button @click.stop="deleteNode" v-show="node.id > 0">×</button>
+    <ul v-show="node.isOpened">
+      <li v-if="node.children.length === 0">
+        <button @click.stop="addNode('child')">+</button>
+      </li>
+      <TreeNode v-else v-for="(child, index) in children(node)" :key="index" :node="child"></TreeNode>
     </ul>
+    <div v-show="node.isLastChild">
+      <button @click.stop="addNode('sibling')">+</button>
+    </div>
   </li>
 </template>
 
@@ -18,13 +25,19 @@ export default {
     node: Object
   },
   methods: {
-    addChild () {
-      this.$store.dispatch('editor/addChild', {
-        node: this.node
+    addNode (relation) {
+      this.$store.dispatch('editor/addNode', {
+        node: this.node,
+        relation: relation
       })
     },
     deleteNode () {
       this.$store.dispatch('editor/deleteNode', {
+        node: this.node
+      })
+    },
+    toggleOpen () {
+      this.$store.dispatch('editor/toggleOpen', {
         node: this.node
       })
     }
