@@ -25,4 +25,8 @@ body {
   width: 100%;
   height: 100%;
 }
+pre {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  margin: 0;
+}
 </style>

@@ -3,14 +3,14 @@
     <button v-if="node.isOpened" @click="toggleOpen">▽</button>
     <button v-else @click="toggleOpen">▷</button>
     {{node.id}}
-    <button @click.stop="deleteNode" v-show="node.id > 0">×</button>
+    <button @click.stop="removeNode" v-show="node.id > 0">×</button>
     <ul v-show="node.isOpened">
       <li v-if="node.children.length === 0">
         <button @click.stop="addNode('child')">+</button>
       </li>
       <TreeNode v-else v-for="(child, index) in children(node)" :key="index" :node="child"></TreeNode>
     </ul>
-    <div v-show="node.isLastChild">
+    <div v-show="node.id > 0 && node.isLastChild">
       <button @click.stop="addNode('sibling')">+</button>
     </div>
   </li>
@@ -31,8 +31,8 @@ export default {
         relation: relation
       })
     },
-    deleteNode () {
-      this.$store.dispatch('editor/deleteNode', {
+    removeNode () {
+      this.$store.dispatch('editor/removeNode', {
         node: this.node
       })
     },

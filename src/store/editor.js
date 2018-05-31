@@ -1,19 +1,14 @@
 const state = {
   id: 4,
   directories: [
-    {id: 0, name: 'aaa', parent: -1, children: [1, 2], isOpened: true, isLastChild: false},
-    {id: 1, name: 'bbb', parent: 0, children: [3, 4], isOpened: true, isLastChild: false},
-    {id: 2, name: 'ccc', parent: 0, children: [], isOpened: true, isLastChild: true},
-    {id: 3, name: 'ddd', parent: 1, children: [], isOpened: true, isLastChild: false},
-    {id: 4, name: 'eee', parent: 1, children: [], isOpened: true, isLastChild: true}
+    {id: 0, name: 'aaa', parent: -1, children: [1, 2], depth: 0, isOpened: true, isLastChild: true},
+    {id: 1, name: 'bbb', parent: 0, children: [3, 4], depth: 1, isOpened: true, isLastChild: false},
+    {id: 2, name: 'ccc', parent: 0, children: [], depth: 1, isOpened: true, isLastChild: true},
+    {id: 3, name: 'ddd', parent: 1, children: [], depth: 2, isOpened: true, isLastChild: false},
+    {id: 4, name: 'eee', parent: 1, children: [], depth: 2, isOpened: true, isLastChild: true}
   ]
 }
 const getters = {
-  // indent (state) {
-  //   return (depth) => {
-  //     return depth * 50 + 'px'
-  //   }
-  // },
   root (state) {
     return state.directories.filter(item => item.parent === -1)
   },
@@ -24,18 +19,18 @@ const getters = {
     return directory => state.directories.find(item => item.id === directory.parent)
   },
   sibling (state, getters) {
-    return directory => getters.children(getters.parent(directory))
+    // return directory => getters.children(getters.parent(directory))
+    return directory => getters.children(getters.parent(directory)).filter(child => child.id !== directory.id)
   },
   descendants (state, getters) {
     return (directory) => {
       const descendant = []
       const search = (children) => {
         if (children.length === 0) {
-          return 0
         } else {
           children.forEach((child) => {
             descendant.push(child)
-            return search(getters.children(child))
+            search(getters.children(child))
           })
         }
       }
@@ -52,16 +47,18 @@ const mutations = {
     const directory = state.directories.find(item => item.id === node.id)
     if (children.length > 0) children[children.length - 1].isLastChild = false
     directory.children.push(state.id)
-    state.directories.push({id: state.id, name: 'New', parent: node.id, children: [], isOpened: false, isLastChild: true})
+    state.directories.push({id: state.id, name: 'New', parent: node.id, children: [], depth: node.depth + 1, isOpened: false, isLastChild: true})
   },
-  addSibling (state, {node, parent, sibling}) {
+  addSibling (state, {node, parent}) {
     state.id++
     // 兄弟追加
-    sibling[sibling.length - 1].isLastChild = false
+    const directory = state.directories.find(item => item.id === node.id)
+    directory.isLastChild = false
     parent.children.push(state.id)
-    state.directories.push({id: state.id, name: 'New', parent: node.parent, children: [], isOpened: false, isLastChild: true})
+    state.directories.push({id: state.id, name: 'New', parent: node.parent, children: [], depth: parent.depth + 1, isOpened: false, isLastChild: true})
   },
-  deleteNode (state, {node, parent, descendants}) {
+  removeNode (state, {node, parent, sibling, descendants}) {
+    if (sibling.length > 0) sibling[sibling.length - 1].isLastChild = true
     parent.children = parent.children.filter(item => item !== node.id)
     state.directories = state.directories.filter(item => item.id !== node.id && descendants.every(descendant => descendant.id !== item.id))
   },
@@ -77,13 +74,13 @@ const actions = {
         commit('addChild', {node, children: getters.children(node)})
         break
       case 'sibling':
-        commit('addSibling', {node, parent: getters.parent(node), sibling: getters.sibling(node)})
+        commit('addSibling', {node, parent: getters.parent(node)})
         break
       default: break
     }
   },
-  deleteNode ({commit, getters}, {node}) {
-    commit('deleteNode', {node, parent: getters.parent(node), children: getters.children(node), descendants: getters.descendants(node)})
+  removeNode ({commit, getters}, {node}) {
+    commit('removeNode', {node, parent: getters.parent(node), sibling: getters.sibling(node), descendants: getters.descendants(node)})
   },
   toggleOpen ({commit, getters}, {node}) {
     commit('toggleOpen', {node, children: getters.children(node)})

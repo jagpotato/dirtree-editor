@@ -1,10 +1,14 @@
 <template>
   <div id="output">
-    {{directories}}
+    <!-- <ul>
+      <DirectoryOutput :node="directories[0]"></DirectoryOutput>
+    </ul> -->
+    <DirectoryOutput :node="directories[0]"></DirectoryOutput>
   </div>
 </template>
 
 <script>
+import DirectoryOutput from '@/components/DirectoryOutput'
 import {mapState} from 'vuex'
 
 export default {
@@ -13,6 +17,9 @@ export default {
     ...mapState('editor', [
       'directories'
     ])
+  },
+  components: {
+    DirectoryOutput
   }
 }
 </script>
