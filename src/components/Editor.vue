@@ -34,12 +34,15 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 #editor {
-  width: 50%;
-  height: 100%;
-  // background-color: #00aa00;
+  width: 48%;
+  height: 98%;
+  background-color: #f2f2f2;
+  border: 1px solid #d9d9d9;
+  overflow: auto;
 }
 #tree {
   padding: 0;
   margin: 0;
+  padding: 10px;
 }
 </style>

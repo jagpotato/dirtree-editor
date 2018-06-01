@@ -49,5 +49,8 @@ export default {
 <style scoped lang="scss">
 .directory-output {
   white-space: pre;
+  span {
+    font-size: 20px;
+  }
 }
 </style>

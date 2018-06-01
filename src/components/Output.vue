@@ -3,7 +3,7 @@
     <!-- <ul>
       <DirectoryOutput :node="directories[0]"></DirectoryOutput>
     </ul> -->
-    <DirectoryOutput :node="directories[0]"></DirectoryOutput>
+    <DirectoryOutput id="output-tree" :node="directories[0]"></DirectoryOutput>
   </div>
 </template>
 
@@ -27,8 +27,13 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 #output {
-  width: 50%;
-  height: 100%;
-  background-color: #aaaaaa;
+  width: 48%;
+  height: 98%;
+  background-color: #f2f2f2;
+  border: 1px solid #d9d9d9;
+  overflow: auto;
+  #output-tree {
+    padding: 10px;
+  }
 }
 </style>

@@ -31,14 +31,8 @@ const getters = {
     */
     return (directory) => {
       let text = directory.name
-      if (directory.depth === 0) {
-        return text
-      }
-      if (directory.isLastChild === true) {
-        text = '`--' + text
-      } else {
-        text = '|--' + text
-      }
+      if (directory.depth === 0) return text
+      text = (directory.isLastChild === true) ? '`-- ' + text : '|-- ' + text
       const space = '    '
       let parentId = directory.parent
       while (parentId >= 0) {
@@ -46,7 +40,7 @@ const getters = {
         if (directory.isLastChild === false) {
           text = '|' + space + text
         } else {
-          text = space + text
+          text = (parentId === 0) ? '  ' + text : space + text
         }
         parentId = directory.parent
       }
