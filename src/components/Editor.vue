@@ -5,7 +5,7 @@
         {{directory.name}}
       </li>
     </ul> -->
-    <ul>
+    <ul id="tree">
       <TreeNode :node="directories[0]"></TreeNode>
     </ul>
   </div>
@@ -36,6 +36,10 @@ export default {
 #editor {
   width: 50%;
   height: 100%;
-  background-color: #00aa00;
+  // background-color: #00aa00;
+}
+#tree {
+  padding: 0;
+  margin: 0;
 }
 </style>

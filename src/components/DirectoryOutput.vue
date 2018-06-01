@@ -21,7 +21,7 @@
     <!-- {{node.name}} -->
     <!-- <pre>{{outputText(node)}}</pre> -->
     <span>{{outputText(node)}}</span>
-    <DirectoryOutput v-for="(child, index) in children(node)" :key="index" :node="child"></DirectoryOutput>
+    <DirectoryOutput v-show="node.isOpened" v-for="(child, index) in children(node)" :key="index" :node="child"></DirectoryOutput>
   </div>
 </template>
 

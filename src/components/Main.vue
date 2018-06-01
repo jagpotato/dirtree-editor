@@ -1,5 +1,5 @@
 <template>
-  <div id="main">
+  <div id="main" @click="closeTextBox">
     <Editor></Editor>
     <Output></Output>
   </div>
@@ -11,6 +11,13 @@ import Output from '@/components/Output'
 
 export default {
   name: 'Main',
+  methods: {
+    closeTextBox (event) {
+      this.$store.dispatch('editor/closeTextBox', {
+        target: event.target
+      })
+    }
+  },
   components: {
     Editor,
     Output

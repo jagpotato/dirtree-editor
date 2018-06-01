@@ -39,7 +39,7 @@ const getters = {
       } else {
         text = '|--' + text
       }
-      const space = '   '
+      const space = '    '
       let parentId = directory.parent
       while (parentId >= 0) {
         directory = rootGetters['editor/parent'](directory)

@@ -12,6 +12,7 @@ export default {
 </script>
 
 <style lang="scss">
+$fontColor: #2c3e50;
 body {
   width: 100vw;
   height: 100vh;
@@ -21,12 +22,12 @@ body {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+  color: $fontColor;
   width: 100%;
   height: 100%;
 }
-pre {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  margin: 0;
+ul {
+  list-style: none;
+  padding-left: 60px;
 }
 </style>

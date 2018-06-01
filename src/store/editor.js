@@ -1,12 +1,13 @@
 const state = {
   id: 4,
   directories: [
-    {id: 0, name: 'aaa', parent: -1, children: [1, 2], depth: 0, isOpened: true, isLastChild: true},
-    {id: 1, name: 'bbb', parent: 0, children: [3, 4], depth: 1, isOpened: true, isLastChild: false},
-    {id: 2, name: 'ccc', parent: 0, children: [], depth: 1, isOpened: true, isLastChild: true},
-    {id: 3, name: 'ddd', parent: 1, children: [], depth: 2, isOpened: true, isLastChild: false},
-    {id: 4, name: 'eee', parent: 1, children: [], depth: 2, isOpened: true, isLastChild: true}
-  ]
+    {id: 0, name: 'aaa', parent: -1, children: [1, 2], depth: 0, isOpened: true, isEditing: false, isLastChild: true},
+    {id: 1, name: 'bbb', parent: 0, children: [3, 4], depth: 1, isOpened: true, isEditing: false, isLastChild: false},
+    {id: 2, name: 'ccc', parent: 0, children: [], depth: 1, isOpened: true, isEditing: false, isLastChild: true},
+    {id: 3, name: 'ddd', parent: 1, children: [], depth: 2, isOpened: true, isEditing: false, isLastChild: false},
+    {id: 4, name: 'eee', parent: 1, children: [], depth: 2, isOpened: true, isEditing: false, isLastChild: true}
+  ],
+  isEditing: false
 }
 const getters = {
   root (state) {
@@ -47,7 +48,7 @@ const mutations = {
     const directory = state.directories.find(item => item.id === node.id)
     if (children.length > 0) children[children.length - 1].isLastChild = false
     directory.children.push(state.id)
-    state.directories.push({id: state.id, name: 'New', parent: node.id, children: [], depth: node.depth + 1, isOpened: false, isLastChild: true})
+    state.directories.push({id: state.id, name: 'New', parent: node.id, children: [], depth: node.depth + 1, isOpened: false, isEditing: false, isLastChild: true})
   },
   addSibling (state, {node, parent}) {
     state.id++
@@ -55,7 +56,7 @@ const mutations = {
     const directory = state.directories.find(item => item.id === node.id)
     directory.isLastChild = false
     parent.children.push(state.id)
-    state.directories.push({id: state.id, name: 'New', parent: node.parent, children: [], depth: parent.depth + 1, isOpened: false, isLastChild: true})
+    state.directories.push({id: state.id, name: 'New', parent: node.parent, children: [], depth: parent.depth + 1, isOpened: false, isEditing: false, isLastChild: true})
   },
   removeNode (state, {node, parent, sibling, descendants}) {
     if (sibling.length > 0) sibling[sibling.length - 1].isLastChild = true
@@ -65,6 +66,21 @@ const mutations = {
   toggleOpen (state, {node, children}) {
     const directory = state.directories.find(item => item.id === node.id)
     directory.isOpened = !directory.isOpened
+  },
+  enableEditing (state, node) {
+    const directory = state.directories.find(item => item.id === node.id)
+    directory.isEditing = true
+    state.isEditing = true
+  },
+  disableEditing (state) {
+    state.directories.find(directory => directory.isEditing === true).isEditing = false
+    state.isEditing = false
+  },
+  updateFolderName (state, {node, name}) {
+    const directory = state.directories.find(item => item.id === node.id)
+    directory.isEditing = false
+    state.isEditing = false
+    directory.name = name
   }
 }
 const actions = {
@@ -84,6 +100,17 @@ const actions = {
   },
   toggleOpen ({commit, getters}, {node}) {
     commit('toggleOpen', {node, children: getters.children(node)})
+  },
+  startEditing ({commit}, {node}) {
+    commit('enableEditing', node)
+  },
+  updateFolderName ({commit}, {node, name}) {
+    commit('updateFolderName', {node, name})
+  },
+  closeTextBox ({commit}, {target}) {
+    if (state.isEditing === true && target.className !== 'name-editor') {
+      commit('disableEditing')
+    }
   }
 }
 
