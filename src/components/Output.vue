@@ -36,14 +36,22 @@ export default {
   width: 48%;
   height: 98%;
   position: relative;
-  background-color: #f2f2f2;
+  background-color: #fafafa;
   border: 1px solid #d9d9d9;
   overflow: auto;
   #copy-button {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
     position: absolute;
     top: 0;
     right: 0;
     outline: 0;
+    border: 0;
+    padding: 0;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
   }
   #output-tree {
     padding: 10px;

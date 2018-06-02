@@ -36,7 +36,7 @@ export default {
 #editor {
   width: 48%;
   height: 98%;
-  background-color: #f2f2f2;
+  background-color: #fafafa;
   border: 1px solid #d9d9d9;
   overflow: auto;
 }
