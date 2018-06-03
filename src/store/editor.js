@@ -80,7 +80,7 @@ const mutations = {
     const directory = state.directories.find(item => item.id === node.id)
     directory.isEditing = false
     state.isEditing = false
-    directory.name = name
+    directory.name = (/^[\s]+$/.test(name) || name === '') ? 'New' : name
   }
 }
 const actions = {

@@ -3,7 +3,7 @@
     <!-- <ul>
       <DirectoryOutput :node="directories[0]"></DirectoryOutput>
     </ul> -->
-    <CopyButton id="copy-button" :text="copyText(directories)"></CopyButton>
+    <CopyButton :text="copyText(directories)"></CopyButton>
     <DirectoryOutput id="output-tree" :node="directories[0]"></DirectoryOutput>
   </div>
 </template>
@@ -39,20 +39,6 @@ export default {
   background-color: #fafafa;
   border: 1px solid #d9d9d9;
   overflow: auto;
-  #copy-button {
-    width: 30px;
-    height: 30px;
-    cursor: pointer;
-    position: absolute;
-    top: 0;
-    right: 0;
-    outline: 0;
-    border: 0;
-    padding: 0;
-    background-color: transparent;
-    display: flex;
-    justify-content: center;
-  }
   #output-tree {
     padding: 10px;
   }

@@ -1,10 +1,5 @@
 <template>
   <div id="editor">
-    <!-- <ul>
-      <li v-for="(directory, index) in root" :key="index" :style="{marginLeft: indent(directory.depth)}">
-        {{directory.name}}
-      </li>
-    </ul> -->
     <ul id="tree">
       <TreeNode :node="directories[0]"></TreeNode>
     </ul>

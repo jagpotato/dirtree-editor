@@ -10,7 +10,7 @@
         </svg>
       </button>
       <svg style="width:18px;height:18px" viewBox="0 0 24 24">
-        <path fill="#ffe791" d="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z" />
+        <path fill="#f7da74" d="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z" />
       </svg>
       <span class="name" v-if="!node.isEditing" @dblclick="startEditing">{{node.name}}</span>
       <input type="text" class="name-editor" v-else @change="updateFolderName" :value="node.name">
