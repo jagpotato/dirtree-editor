@@ -1,8 +1,5 @@
 <template>
   <div id="output">
-    <!-- <ul>
-      <DirectoryOutput :node="directories[0]"></DirectoryOutput>
-    </ul> -->
     <CopyButton :text="copyText(directories)"></CopyButton>
     <DirectoryOutput id="output-tree" :node="directories[0]"></DirectoryOutput>
   </div>
@@ -41,6 +38,12 @@ export default {
   overflow: auto;
   #output-tree {
     padding: 10px;
+  }
+}
+@media screen and (max-width: 480px) {
+  #output {
+    width: 98%;
+    height: 48%;
   }
 }
 </style>

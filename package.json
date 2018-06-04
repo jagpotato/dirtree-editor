@@ -1,7 +1,7 @@
 {
   "name": "dirtree-editor",
   "version": "1.0.0",
-  "description": "A Vue.js project",
+  "description": "directory tree editor",
   "author": "jagpotato",
   "private": true,
   "scripts": {

@@ -34,4 +34,9 @@ export default {
   justify-content: space-evenly;
   align-items: center;
 }
+@media screen and (max-width: 480px) {
+  #main {
+    flex-direction: column;
+  }
+}
 </style>

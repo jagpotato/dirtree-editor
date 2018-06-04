@@ -35,6 +35,12 @@ export default {
   border: 1px solid #d9d9d9;
   overflow: auto;
 }
+@media screen and (max-width: 480px) {
+  #editor {
+    width: 98%;
+    height: 48%;
+  }
+}
 #tree {
   padding: 0;
   margin: 0;

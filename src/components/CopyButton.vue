@@ -28,6 +28,7 @@ export default {
       const clip = new Clipboard('#copy-button')
       clip.on('success', (e) => {
         this.isCopied = true
+        clip.destroy()
       })
     },
     removeMessage () {

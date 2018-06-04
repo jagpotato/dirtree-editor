@@ -1,7 +1,5 @@
 <template>
   <li class="tree-node">
-    <!-- <button v-if="node.isOpened" @click="toggleOpen">▽</button>
-    <button v-else @click="toggleOpen">▷</button> -->
     <div class="folder" :class="{rootFolder: node.depth === 0}">
       <button class="open-button" @click="toggleOpen">
         <svg style="width:24px;height:24px" viewBox="0 0 24 24">
