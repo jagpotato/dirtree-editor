@@ -1,11 +1,7 @@
 const state = {
   id: 4,
   directories: [
-    {id: 0, name: 'aaa', parent: -1, children: [1, 2], depth: 0, isOpened: true, isEditing: false, isLastChild: true},
-    {id: 1, name: 'bbb', parent: 0, children: [3, 4], depth: 1, isOpened: true, isEditing: false, isLastChild: false},
-    {id: 2, name: 'ccc', parent: 0, children: [], depth: 1, isOpened: true, isEditing: false, isLastChild: true},
-    {id: 3, name: 'ddd', parent: 1, children: [], depth: 2, isOpened: true, isEditing: false, isLastChild: false},
-    {id: 4, name: 'eee', parent: 1, children: [], depth: 2, isOpened: true, isEditing: false, isLastChild: true}
+    {id: 0, name: 'root', parent: -1, children: [], depth: 0, isOpened: true, isEditing: false, isLastChild: true}
   ],
   isEditing: false
 }
