@@ -4,8 +4,8 @@ const getters = {
     return (directory) => {
       let text = directory.name
       if (directory.depth === 0) return text
-      text = (directory.isLastChild === true) ? '`-- ' + text : '|-- ' + text
-      const space = '      '
+      text = (directory.isLastChild === true) ? '`--' + text : '|--' + text
+      const space = '    '
       let parentId = directory.parent
       while (parentId >= 0) {
         directory = rootGetters['editor/parent'](directory)
