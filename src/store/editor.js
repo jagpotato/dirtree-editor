@@ -1,5 +1,5 @@
 const state = {
-  id: 4,
+  id: 0,
   directories: [
     {id: 0, name: 'root', parent: -1, children: [], depth: 0, isOpened: true, isEditing: false, isLastChild: true}
   ],

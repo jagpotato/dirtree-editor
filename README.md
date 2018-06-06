@@ -1,6 +1,6 @@
 # dirtree-editor
 
-> A Vue.js project
+directory tree editor
 
 ## Build Setup
 
