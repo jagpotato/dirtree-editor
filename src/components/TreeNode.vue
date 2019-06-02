@@ -1,37 +1,66 @@
 <template>
   <li class="tree-node">
+    <!-- 1フォルダ -->
     <div class="folder" :class="{rootFolder: node.depth === 0}">
+      <!-- フォルダ開閉ボタン -->
       <button class="open-button" @click="toggleOpen">
         <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-          <path v-if="node.isOpened" fill="#2c3e50" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
-          <path v-else fill="#2c3e50" d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
+          <path
+            v-if="node.isOpened"
+            fill="#2c3e50"
+            d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"
+          ></path>
+          <path
+            v-else
+            fill="#2c3e50"
+            d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"
+          ></path>
         </svg>
       </button>
+      <!-- フォルダのsvg -->
       <svg style="width:18px;height:18px" viewBox="0 0 24 24">
-        <path fill="#f7da74" d="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z" />
+        <path
+          fill="#f7da74"
+          d="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z"
+        ></path>
       </svg>
+      <!-- フォルダ名 -->
       <span class="name" v-if="!node.isEditing" @dblclick="startEditing">{{node.name}}</span>
       <input type="text" class="name-editor" v-else @change="updateFolderName" :value="node.name">
+      <!-- フォルダ削除ボタン -->
       <button class="remove-button" @click.stop="removeNode" v-show="node.id > 0">
         <svg style="width:20px;height:20px" viewBox="0 0 24 24">
-          <path fill="#429bf4" d="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M7,13H17V11H7" />
+          <path
+            fill="#429bf4"
+            d="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M7,13H17V11H7"
+          ></path>
         </svg>
       </button>
     </div>
+    <!-- 子フォルダ -->
     <ul v-show="node.isOpened">
+      <!-- 子が0のとき、子追加ボタン -->
       <li class="child-button" v-if="node.children.length === 0">
         <button @click.stop="addNode('child')">
           <svg style="width:20px;height:20px" viewBox="0 0 24 24">
-            <path fill="#f44242" d="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M13,7H11V11H7V13H11V17H13V13H17V11H13V7Z" />
+            <path
+              fill="#f44242"
+              d="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M13,7H11V11H7V13H11V17H13V13H17V11H13V7Z"
+            ></path>
           </svg>
         </button>
       </li>
+      <!-- 子がいるとき、子フォルダ -->
       <TreeNode v-else v-for="(child, index) in children(node)" :key="index" :node="child"></TreeNode>
     </ul>
+    <!-- 兄弟追加ボタン -->
     <div class="sibling-button" v-show="node.id > 0 && node.isLastChild">
       <button @click.stop="addNode('sibling')">
         <svg style="width:20px;height:20px" viewBox="0 0 24 24">
-          <path fill="#f44242" d="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M13,7H11V11H7V13H11V17H13V13H17V11H13V7Z" />
+          <path
+            fill="#f44242"
+            d="M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M13,7H11V11H7V13H11V17H13V13H17V11H13V7Z"
+          ></path>
         </svg>
       </button>
     </div>
@@ -39,7 +68,7 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'TreeNode',
@@ -76,9 +105,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('editor', [
-      'children'
-    ])
+    ...mapGetters('editor', ['children'])
   }
 }
 </script>
@@ -97,7 +124,7 @@ $folderHeight: 30px;
 ul {
   position: relative;
   &::before {
-    content: '';
+    content: "";
     width: 1px;
     height: calc(100% - 15px);
     position: absolute;
@@ -109,10 +136,12 @@ ul {
     border-left: 1px dotted $pathColor;
   }
 }
-.folder:not(.rootFolder), .child-button, .sibling-button {
+.folder:not(.rootFolder),
+.child-button,
+.sibling-button {
   position: relative;
   &::before {
-    content: '';
+    content: "";
     width: 30px;
     height: 1px;
     position: absolute;
@@ -151,7 +180,8 @@ ul {
     align-items: center;
   }
 }
-.child-button, .sibling-button {
+.child-button,
+.sibling-button {
   height: $folderHeight;
   display: flex;
   align-items: center;

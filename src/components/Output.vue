@@ -8,7 +8,7 @@
 <script>
 import CopyButton from '@/components/CopyButton'
 import DirectoryOutput from '@/components/DirectoryOutput'
-import {mapState, mapGetters} from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   name: 'Output',

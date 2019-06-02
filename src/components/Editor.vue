@@ -8,7 +8,7 @@
 
 <script>
 import TreeNode from '@/components/TreeNode'
-import {mapState, mapGetters} from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   name: 'Editor',
